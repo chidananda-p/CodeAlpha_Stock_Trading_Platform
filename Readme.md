@@ -113,16 +113,16 @@ java StockMarket
 
 _Add your project screenshots here._
 
-#Dashboard
+# Dashboard
 ![StockTrader Dashboard](dashboard.png)
 
-#Trade Page
+# Trade Page
 ![Trade Page](trade-page.png)
 
-#Portfolio Page
+# Portfolio Page
 ![Portfolio Page](portfolio-page.png)
 
-#History Page
+# History Page
 ![History Page](history-page.png)
 
 
