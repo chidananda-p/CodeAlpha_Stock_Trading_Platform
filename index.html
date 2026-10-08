@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockTrader — Trading Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Welcome Modal -->
+    <div class="modal-overlay" id="welcomeModal">
+        <div class="modal">
+            <div class="modal-icon"><img src="logo.png" alt="Logo" class="modal-logo"></div>
+            <h2>Welcome to StockTrader</h2>
+            <p>Start with <strong>$100,000</strong> in virtual cash. Buy and sell stocks, track your portfolio, and grow your wealth.</p>
+            <input type="text" id="usernameInput" placeholder="Enter your name" maxlength="20" autofocus>
+            <button id="startBtn">Start Trading</button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-left">
+            <img src="logo.png" alt="StockTrader" class="header-logo">
+            <h1>StockTrader</h1>
+        </div>
+        <div class="header-right">
+            <div class="header-stat">
+                <span class="label">Trader</span>
+                <span class="value" id="headerUser">—</span>
+            </div>
+            <div class="divider"></div>
+            <div class="header-stat">
+                <span class="label">Cash</span>
+                <span class="value" id="headerBalance">$0.00</span>
+            </div>
+            <div class="divider"></div>
+            <div class="header-stat">
+                <span class="label">Total Assets</span>
+                <span class="value" id="headerTotal">$0.00</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-tab="market">Market</button>
+            <button class="nav-tab" data-tab="trade">Trade</button>
+            <button class="nav-tab" data-tab="portfolio">Portfolio</button>
+            <button class="nav-tab" data-tab="history">History</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- ── MARKET TAB ── -->
+        <section id="market" class="tab-content active">
+            <div class="section-header">
+                <h2>Live Market</h2>
+                <div class="market-controls">
+                    <button class="btn-outline" id="simulateBtn">Simulate Tick</button>
+                    <button class="btn-outline" id="autoSimBtn">Auto ▶</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Company</th>
+                            <th class="align-right">Price</th>
+                            <th class="align-right">Change</th>
+                            <th class="align-right">Change %</th>
+                            <th class="align-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="marketBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ── TRADE TAB ── -->
+        <section id="trade" class="tab-content">
+            <div class="trade-panels">
+                <div class="trade-card">
+                    <div class="trade-header buy-header">Buy Stock</div>
+                    <div class="trade-body">
+                        <div class="form-group">
+                            <label for="buySymbol">Select Stock</label>
+                            <select id="buySymbol"><option value="">Choose...</option></select>
+                        </div>
+                        <div class="preview-box" id="buyStockInfo"></div>
+                        <div class="form-group">
+                            <label for="buyQty">Quantity</label>
+                            <input type="number" id="buyQty" min="1" placeholder="0">
+                        </div>
+                        <div class="preview-box summary" id="buySummary"></div>
+                        <button class="btn-buy" id="buyBtn">Buy</button>
+                    </div>
+                </div>
+                <div class="trade-card">
+                    <div class="trade-header sell-header">Sell Stock</div>
+                    <div class="trade-body">
+                        <div class="form-group">
+                            <label for="sellSymbol">Select Stock</label>
+                            <select id="sellSymbol"><option value="">Choose...</option></select>
+                        </div>
+                        <div class="preview-box" id="sellStockInfo"></div>
+                        <div class="form-group">
+                            <label for="sellQty">Quantity</label>
+                            <input type="number" id="sellQty" min="1" placeholder="0">
+                        </div>
+                        <div class="preview-box summary" id="sellSummary"></div>
+                        <button class="btn-sell" id="sellBtn">Sell</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── PORTFOLIO TAB ── -->
+        <section id="portfolio" class="tab-content">
+            <div class="section-header"><h2>Portfolio</h2></div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Cash Balance</span>
+                    <span class="stat-value" id="portCash">$0.00</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Holdings Value</span>
+                    <span class="stat-value" id="portHoldings">$0.00</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Total Assets</span>
+                    <span class="stat-value" id="portTotal">$0.00</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Overall Return</span>
+                    <span class="stat-value" id="portReturn">0.00%</span>
+                </div>
+            </div>
+            <h3>Holdings</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th class="align-right">Quantity</th>
+                            <th class="align-right">Avg Cost</th>
+                            <th class="align-right">Current</th>
+                            <th class="align-right">Market Value</th>
+                            <th class="align-right">P / L</th>
+                        </tr>
+                    </thead>
+                    <tbody id="portfolioBody"></tbody>
+                </table>
+            </div>
+            <p class="empty-msg" id="emptyPortfolio">No holdings yet. Go to the Trade tab to buy stocks.</p>
+        </section>
+
+        <!-- ── HISTORY TAB ── -->
+        <section id="history" class="tab-content">
+            <div class="section-header">
+                <h2>Transaction History</h2>
+                <button class="btn-outline btn-danger" id="clearHistoryBtn">Clear</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date / Time</th>
+                            <th>Type</th>
+                            <th>Symbol</th>
+                            <th class="align-right">Qty</th>
+                            <th class="align-right">Price</th>
+                            <th class="align-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyBody"></tbody>
+                </table>
+            </div>
+            <p class="empty-msg" id="emptyHistory">No transactions yet.</p>
+        </section>
+
+    </main>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
